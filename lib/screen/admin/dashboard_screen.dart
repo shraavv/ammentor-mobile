@@ -134,7 +134,7 @@ class DashboardScreen extends ConsumerWidget {
                     decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.white12),
+                      border: Border.all(color: AppColors.textDark),
                     ),
                     child: Column(
                       children: [
@@ -143,7 +143,7 @@ class DashboardScreen extends ConsumerWidget {
                           colorList: colorList,
                           chartRadius: screenWidth / 2.8,
                           chartType: ChartType.disc,
-                          baseChartColor: Colors.grey.shade800,
+                          baseChartColor: AppColors.surface,
                           legendOptions: const LegendOptions(
                             showLegends: true,
                             legendTextStyle: TextStyle(color: Colors.white70),
@@ -176,12 +176,12 @@ class DashboardScreen extends ConsumerWidget {
       decoration: BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFFFC107)),
+        border: Border.all(color: AppColors.primary),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: const Color(0xFFFFC107)),
+          Icon(icon, color: AppColors.primary),
           const SizedBox(height: 8),
           Text(
             value,

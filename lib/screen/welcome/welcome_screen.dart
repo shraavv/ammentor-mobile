@@ -80,7 +80,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           Navigator.of(context).push(
                             PageAnimationTransition(
                             
-                              page: LoginScreen(userRole: _selectedOption == 'Mentor' ? UserRole.mentor : _selectedOption == 'Mentor' ? UserRole.mentee : UserRole.admin),
+                              page: LoginScreen(userRole: _selectedOption == 'Mentor' ? UserRole.mentor : _selectedOption == 'Mentee' ? UserRole.mentee : UserRole.admin),
                               pageAnimationType: FadeAnimationTransition(),
                             ),
                           );
