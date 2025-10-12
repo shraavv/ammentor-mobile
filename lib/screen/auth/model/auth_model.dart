@@ -14,4 +14,5 @@ class OtpResponse {
 enum UserRole {
   mentor,
   mentee,
+  admin
 }

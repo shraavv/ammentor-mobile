@@ -64,7 +64,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       SizedBox(height: screenHeight*0.02),
 
                       CustomButton(
-                        options: const ['Mentee', 'Mentor'],
+                        options: const ['Mentee', 'Mentor','Admin'],
                         initialSelection: 'Mentee',
                         onSelect: (selected) {
                           setState(() {
@@ -80,7 +80,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           Navigator.of(context).push(
                             PageAnimationTransition(
                             
-                              page: LoginScreen(userRole: _selectedOption == 'Mentor' ? UserRole.mentor : UserRole.mentee),
+                              page: LoginScreen(userRole: _selectedOption == 'Mentor' ? UserRole.mentor : _selectedOption == 'Mentor' ? UserRole.mentee : UserRole.admin),
                               pageAnimationType: FadeAnimationTransition(),
                             ),
                           );

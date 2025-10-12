@@ -141,7 +141,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                       Text(
                         widget.userRole == UserRole.mentor
                             ? "Mentor Login"
-                            : "Mentee Login",
+                            : widget.userRole == UserRole.mentee
+                                ? "Mentee Login"
+                                : "Admin Login", // THERE IS UPDATION ISSUE HERE CHECK
                         style: AppTextStyles.subheading(context)
                             .copyWith(fontWeight: FontWeight.w900),
                       ),
@@ -168,32 +170,35 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                       SizedBox(height: screenHeight * 0.015),
 
                       /// 🔁 Role Switch Text
-                      TextButton(
-                        onPressed: () async {
-                          await _controller.reverse(); // Fade + slide out
-                          if (!mounted) return;
-                          final oppositeRole = widget.userRole == UserRole.mentor
-                              ? UserRole.mentee
-                              : UserRole.mentor;
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) =>
-                                  LoginScreen(userRole: oppositeRole),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          widget.userRole == UserRole.mentor
-                              ? "Not a mentor? Switch to Mentee"
-                              : "Not a mentee? Switch to Mentor",
-                          style: AppTextStyles.caption(context).copyWith(
-                            decoration: TextDecoration.underline,
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
+                    
+                      // commented this as there is a new user now ie ADMIN, DISCUSS what to do
+
+                      // TextButton(
+                      //   onPressed: () async {
+                      //     await _controller.reverse(); // Fade + slide out
+                      //     if (!mounted) return;
+                      //     final oppositeRole = widget.userRole == UserRole.mentor
+                      //         ? UserRole.mentee
+                      //         : UserRole.mentor;
+                      //     Navigator.pushReplacement(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //         builder: (_) =>
+                      //             LoginScreen(userRole: oppositeRole),
+                      //       ),
+                      //     );
+                      //   },
+                      //   child: Text(
+                      //     widget.userRole == UserRole.mentor
+                      //         ? "Not a mentor? Switch to Mentee"
+                      //         : "Not a mentee? Switch to Mentor",
+                      //     style: AppTextStyles.caption(context).copyWith(
+                      //       decoration: TextDecoration.underline,
+                      //       color: AppColors.primary,
+                      //       fontWeight: FontWeight.w500,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
