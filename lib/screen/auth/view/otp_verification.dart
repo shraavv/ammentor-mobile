@@ -12,6 +12,7 @@ import 'package:page_animation_transition/page_animation_transition.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_faded_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:ammentor/screen/admin/admin_dashboard.dart';
 
 class OtpVerification extends ConsumerStatefulWidget {
   final UserRole userRole;
@@ -59,7 +60,9 @@ class _OtpVerificationState extends ConsumerState<OtpVerification> {
     ref.read(userEmailProvider.notifier).state = widget.email;
       final Widget targetPage = widget.userRole == UserRole.mentor
           ? const MentorHomePage()
-          : const MenteeHomePage();
+          : widget.userRole == UserRole.mentor
+              ? const MenteeHomePage()
+              : const AdminDashboard();
 
       Navigator.of(context).pushReplacement(
         PageAnimationTransition(
