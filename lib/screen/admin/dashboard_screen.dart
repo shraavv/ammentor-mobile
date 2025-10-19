@@ -57,8 +57,9 @@ class DashboardScreen extends ConsumerWidget {
           ),
         ),
       ),
-      body: userAsync.when(
-        data: (user) => SafeArea(
+       body: //userAsync.when(
+      //   data: (user) => 
+      SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: SingleChildScrollView(
@@ -161,11 +162,11 @@ class DashboardScreen extends ConsumerWidget {
             ),
           ),
         ),
-        loading: () =>
-            const Center(child: CircularProgressIndicator(color: Colors.white)),
-        error: (err, _) => Center(child: Text("Error: $err")),
-      ),
-    );
+        // loading: () =>
+        //     const Center(child: CircularProgressIndicator(color: Colors.white)),
+        // error: (err, _) => Center(child: Text("Error: $err")),
+      );
+    // );
   }
 
   // Cards
