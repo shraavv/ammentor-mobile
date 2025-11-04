@@ -8,6 +8,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ammentor/screen/evaluation/model/mentee_tasks_model.dart';
 import 'package:ammentor/screen/evaluation/provider/evaluation_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Updated to accept trackId dynamically
 final submissionProvider = FutureProvider.family<Map<String, dynamic>?, (String, int, int)>((ref, params) async {
@@ -53,6 +54,23 @@ class _TaskEvaluationViewScreenState extends ConsumerState<TaskEvaluationViewScr
     super.didChangeDependencies();
     ref.invalidate(submissionProvider((widget.menteeEmail, widget.task.submissionId, defaultTrackId)));
   }
+
+  Future<void> _launchUrl(String url) async {
+  String normalized = url.trim();
+  if (!normalized.startsWith('http://') && !normalized.startsWith('https://')) {
+    normalized = 'https://$normalized';
+  }
+
+  final uri = Uri.tryParse(normalized);
+  if (uri != null && await canLaunchUrl(uri)) {
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Invalid link')),
+    );
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +152,18 @@ class _TaskEvaluationViewScreenState extends ConsumerState<TaskEvaluationViewScr
                 SizedBox(height: screenHeight * 0.01),
                 _buildSubmissionDetail(HugeIcons.strokeRoundedSunrise, startDate ?? "No start date", context),
                 _buildSubmissionDetail(HugeIcons.strokeRoundedSunset, submittedAt ?? "No submission date", context),
-                _buildSubmissionDetail(HugeIcons.strokeRoundedLink01, referenceLink ?? "No link", context),
+                (() {
+                      final raw = (referenceLink ?? '').toString().trim();
+                      final hasLink = raw.isNotEmpty && raw.toLowerCase() != 'null';
+                      final linkText = hasLink ? raw : 'No link';
+
+                      return _buildSubmissionDetail(
+                        HugeIcons.strokeRoundedLink01,
+                        linkText,
+                        context,
+                        onTap: hasLink ? () => _launchUrl(raw) : null,
+                      );
+                    })(),
                 _buildSubmissionDetail(HugeIcons.strokeRoundedCheckmarkBadge02, "Status: $statusText", context),
                 if (mentorFeedback != null && mentorFeedback.toString().isNotEmpty && mentorFeedback.toString() != "null")
                   _buildSubmissionDetail(HugeIcons.strokeRoundedComment01, "Mentor Remark: $mentorFeedback", context),
@@ -181,25 +210,32 @@ class _TaskEvaluationViewScreenState extends ConsumerState<TaskEvaluationViewScr
     );
   }
 
-  Widget _buildSubmissionDetail(IconData icon, String text, BuildContext context) {
+  Widget _buildSubmissionDetail(IconData icon, String text, BuildContext context, {VoidCallback? onTap, }) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    final isClickable = onTap != null;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
       child: Row(
         children: [
           Icon(icon, color: AppColors.grey),
           SizedBox(width: screenWidth * 0.02),
-          Flexible(
+           Expanded(
+          child: InkWell(
+            onTap: onTap,
             child: Text(
               text,
-              style: AppTextStyles.caption(context),
+              style: AppTextStyles.caption(context).copyWith(
+                decoration: isClickable ? TextDecoration.underline : null,
+                color: isClickable ? Colors.blue : AppTextStyles.caption(context).color,
+              ),
               overflow: TextOverflow.ellipsis,
               maxLines: 3,
             ),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
 }
