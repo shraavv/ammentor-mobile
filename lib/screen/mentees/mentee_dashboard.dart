@@ -63,8 +63,8 @@ class _MenteeHomePageState extends State<MenteeHomePage> {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 padding: EdgeInsets.symmetric(
-                  horizontal: isSelected ? 16 : 0,
-                  vertical: 10,
+                  horizontal: isSelected ? 12 : 27,
+                  vertical: 16,
                 ),
                 decoration: BoxDecoration(
                   color: isSelected

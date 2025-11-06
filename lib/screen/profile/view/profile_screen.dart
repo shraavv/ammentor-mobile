@@ -74,9 +74,9 @@ class ProfileScreen extends ConsumerWidget {
                   SizedBox(height: screenHeight * 0.025),
 
                   // --- Badges Section ---
-                  _buildBadgesSection(context, user, screenWidth, screenHeight),
+                  // _buildBadgesSection(context, user, screenWidth, screenHeight),
                   
-                  SizedBox(height: screenHeight * 0.04),
+                  // SizedBox(height: screenHeight * 0.04),
 
                   // --- Logout Button ---
                   _buildLogoutButton(context, ref, screenWidth, screenHeight),
